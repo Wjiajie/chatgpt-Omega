@@ -5,6 +5,9 @@ import { presetUno } from 'unocss'
 import presetAttributify from '@unocss/preset-attributify'
 import presetTypography from '@unocss/preset-typography'
 import solidJs from '@astrojs/solid-js'
+import tailwindcss from 'tailwindcss'
+import postcss from 'postcss'
+import autoprefixer from 'autoprefixer'
 
 // https://astro.build/config
 export default defineConfig({
@@ -17,6 +20,13 @@ export default defineConfig({
       ]
     }),
     solidJs()
+  ],
+  stylesheets: [
+    {
+      async transform(css) {
+        return (await postcss([tailwindcss, autoprefixer]).process(css, { from: undefined })).css
+      }
+    }
   ],
   output: 'server',
   adapter: vercel()

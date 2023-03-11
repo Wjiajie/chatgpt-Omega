@@ -1,26 +1,23 @@
 .message pre {
-  background-color: #64748b10;
-  font-size: 0.8rem;
-  padding: 0.4rem 1rem;
+  @apply bg-gray-300 text-sm p-4;
 }
 
 .message .hljs {
-  background-color: transparent;
+  @apply bg-transparent;
 }
 
 .message table {
-  font-size: 0.8em;
+  @apply text-sm;
 }
 
 .message table thead tr {
-  background-color: #64748b40;
-  text-align: left;
+  @apply bg-gray-400 text-left;
 }
 
 .message table th, .message table td {
-  padding: 0.6rem 1rem;
+  @apply py-2 px-4;
 }
 
-.message table tbody tr:last-of-type {
-  border-bottom: 2px solid #64748b40;
+.message table tbody tr:last-child {
+  @apply border-b-2 border-gray-400;
 }
