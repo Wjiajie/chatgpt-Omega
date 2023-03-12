@@ -8,6 +8,7 @@ import solidJs from '@astrojs/solid-js'
 import tailwindcss from 'tailwindcss'
 import postcss from 'postcss'
 import autoprefixer from 'autoprefixer'
+import vercel from '@astrojs/vercel/serverless';
 
 // https://astro.build/config
 export default defineConfig({
