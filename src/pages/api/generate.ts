@@ -1,7 +1,7 @@
 import type { APIRoute } from 'astro'
 import { createParser, ParsedEvent, ReconnectInterval } from 'eventsource-parser'
-
-const apiKey = import.meta.env.OPENAI_API_KEY
+// const apiKey = import.meta.env.OPENAI_API_KEY
+const apiKey = process.env.OPENAI_API_KEY
 
 export const post: APIRoute = async (context) => {
   const body = await context.request.json()

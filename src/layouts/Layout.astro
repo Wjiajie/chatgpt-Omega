@@ -5,6 +5,11 @@ export interface Props {
 	title: string;
 }
 
+declare global { 
+	interface Window { 
+		openaiApiKey : string; 
+	} 
+}
 const { title } = Astro.props;
 ---
 
@@ -30,6 +35,12 @@ const { title } = Astro.props;
 			opacity: 0.2;
 			transition: opacity 0.5s ease;
 		}
+
+		#getkey button:hover, #settingsMenu button:hover { 
+			background: linear-gradient(to right, #4fd1c5, #3c7d9b); 
+			-webkit-background-clip: text; 
+			-webkit-text-fill-color: transparent; 
+		}
 	</style>
 
     <div class="fixed top-10 left-10">
@@ -41,21 +52,50 @@ const { title } = Astro.props;
 		  function openKeyUrl() {
 			window.open("https://www.jiajiewu.top/", "_blank");
 		  }
+		  function openApiKeyInput() {
+			const apiKeyInput = document.getElementById("apiKeyInput");
+			apiKeyInput.classList.replace("hidden", "block");
+		}
+		
+		function saveApiKey() {
+			const apiKeyInput = document.getElementById("apiKeyInput");
+			const apiKey = document.getElementById("apiKey").value;
+			apiKeyInput.classList.replace("block", "hidden");
+
+			window.openaiApiKey  = apiKey;
+			// 显示API KEY
+			const apiKeyDisplay = document.getElementById("apiKeyDisplay");
+			apiKeyDisplay.innerText = window.openaiApiKey ;
+
+			process.env.OPENAI_API_KEY = window.openaiApiKey;
+		}
+		
+		const settingsMenuButton = document.querySelector("#settingsMenu button");
+		settingsMenuButton.addEventListener("click", openApiKeyInput);
 		</script>}
-		<div id="getkey" class="menu hidden transition-all duration-500">
-		  <div class="flex flex-col items-left justify-center">
-			<button title='Clear' onclick="openKeyUrl()" h-12 px-4 py-2 bg-slate bg-op-10 hover:bg-op-50 text-slate rounded-sm>
-				获取OPENAI_API_KEY
-			</button>
-		  </div>
-		</div>
-	  
-		<div id="settingsMenu" class="menu hidden transition-all duration-500">
-		  <div class="flex flex-col items-left justify-center">
-			<button title='Clear' onclick="_blank" h-12 px-4 py-2 bg-slate bg-op-10 hover:bg-op-50 text-slate rounded-sm>
-				设置
-			</button>
-		  </div>
+		<div id="apiKeyDisplay"></div>
+		<div class="menu-wrapper">
+			<div id="getkey" class="menu hidden transition-all duration-500">
+				<div class="flex flex-col items-left justify-center">
+					<button title='Clear' onclick="openKeyUrl()" h-12 px-4 py-2>
+						获取openaiApiKey 
+					</button>
+				</div>
+			</div>
+		
+			<div id="settingsMenu" class="menu hidden transition-all duration-500">
+				<div class="flex flex-col items-left justify-center">
+					<button title='Clear' onclick="openApiKeyInput()" h-12 px-4 py-2>
+						填写openaiApiKey 
+					</button>
+					<div id="apiKeyInput" class="hidden">
+						<input type="text" id="apiKey" placeholder="sk-XXX" class="w-full h-12 px-4 py-2" />
+						<button onclick="saveApiKey()" class="h-12 px-4 py-2">
+							保存            
+						</button>
+					</div>
+				</div>
+			</div>
 		</div>
 	</div>
 	  
@@ -141,5 +181,18 @@ const { title } = Astro.props;
 		right: 0;
 		margin-top: 0;
 	  }
+	}
+
+	.menu-wrapper {
+		position: relative;
+		background-color: rgba(255, 255, 255, 0.1);
+		backdrop-filter: blur(10px);
+		border-radius: 8px;
+		padding: 16px;
+	}
+
+	#apiKey {
+	color: black;
+	background-color: white;
 	}
 </style>
