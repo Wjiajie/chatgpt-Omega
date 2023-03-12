@@ -1,5 +1,4 @@
 import { defineConfig } from 'astro/config'
-import vercel from '@astrojs/vercel/edge'
 import unocss from 'unocss/astro'
 import { presetUno } from 'unocss'
 import presetAttributify from '@unocss/preset-attributify'
